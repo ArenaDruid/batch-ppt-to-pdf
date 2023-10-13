@@ -1,0 +1,5 @@
+.venv/
+ppt/*
+!ppt/.gitkeep
+pdf/*
+!pdf/.gitkeep
