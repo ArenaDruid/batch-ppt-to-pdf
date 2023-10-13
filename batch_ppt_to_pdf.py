@@ -7,18 +7,23 @@ def init_powerpoint():
     return powerpoint
 
 def ppt_to_pdf(powerpoint, inputFileName, outputFileName, formatType = 32):
-    if outputFileName[-3:] != 'pdf':
-        outputFileName = outputFileName + ".pdf"
     deck = powerpoint.Presentations.Open(inputFileName)
     deck.SaveAs(outputFileName, formatType) # formatType = 32 for ppt to pdf
     deck.Close()
 
 def convert_files_in_folder(powerpoint, folder):
-    files = os.listdir(folder)
+    pptFolder = 'ppt'
+    pptPath = os.path.join(folder, pptFolder)
+    pdfFolder = 'pdf'
+    pdfPath = os.path.join(folder, pdfFolder)
+    files = os.listdir(pptPath)
     pptfiles = [f for f in files if f.endswith((".ppt", ".pptx"))]
     for pptfile in pptfiles:
-        fullpath = os.path.join(folder, pptfile)
-        ppt_to_pdf(powerpoint, fullpath, fullpath)
+        pptFullPath = os.path.join(pptPath, pptfile)
+        name,_ = os.path.splitext(pptfile)
+        pdfFile = name + '.pdf'
+        pdfFullPath = os.path.join(pdfPath, pdfFile)
+        ppt_to_pdf(powerpoint, pptFullPath, pdfFullPath)
 
 if __name__ == "__main__":
     powerpoint = init_powerpoint()
